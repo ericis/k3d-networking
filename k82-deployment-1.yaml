@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-1
+spec:
+  selector:
+    matchLabels:
+      run: app-1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: app-1
+    spec:
+      containers:
+      - name: app-1
+        image: mcr.microsoft.com/dotnet/samples:aspnetapp
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
