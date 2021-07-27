@@ -1,0 +1,27 @@
+apiVersion: k3d.io/v1alpha2
+kind: Simple
+name: learn-networking
+servers: 1
+agents: 1
+ports:
+  # map localhost to loadbalancer
+  - port: 8080:80
+    nodeFilters:
+      - loadbalancer
+  # map localhost to loadbalancer
+  - port: 8091:80
+    nodeFilters:
+      - loadbalancer
+registries:
+  create: false
+  use:
+      - k3d-learn-networking-registry:37735
+  config: |
+    configs:
+      k3d-learn-networking-registry:
+        tls:
+          ca_file: /etc/ssl/certs/zscaler_root_ca.pem
+options:
+  kubeconfig:
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true
