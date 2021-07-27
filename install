@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+k3d registry create learn-networking-registry \
+    --port 37735 \
+    --no-help
+
+k3d cluster create \
+    --config ./k3d.yaml \
+    --volume "${script_dir}/zscaler_root_ca.pem":/etc/ssl/certs/zscaler_root_ca.pem
+
+# deploy nginx
+kubectl apply -f ./k8s-deployment-1.yaml
+# expose nginx internally within k8s
+# kubectl apply -f ./k8s-service-1.yaml
+kubectl create service clusterip app-1 --tcp=8080:80
+# expose nginx externally from k8s
+kubectl apply -f ./k8s-ingress-1.yaml
+
+# deploy nginx
+kubectl apply -f ./k8s-deployment-2.yaml
+# expose nginx internally within k8s
+# kubectl apply -f ./k8s-service-2.yaml
+kubectl create service clusterip app-2 --tcp=8091:80
+# expose nginx externally from k8s
+kubectl apply -f ./k8s-ingress-2.yaml
