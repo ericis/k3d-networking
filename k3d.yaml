@@ -16,11 +16,6 @@ registries:
   create: false
   use:
       - k3d-learn-networking-registry:37735
-  config: |
-    configs:
-      k3d-learn-networking-registry:
-        tls:
-          ca_file: /etc/ssl/certs/zscaler_root_ca.pem
 options:
   kubeconfig:
     updateDefaultKubeconfig: true
