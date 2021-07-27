@@ -2,15 +2,11 @@
 
 set -e
 
-script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-
 k3d registry create learn-networking-registry \
     --port 37735 \
     --no-help
 
-k3d cluster create \
-    --config ./k3d.yaml \
-    --volume "${script_dir}/zscaler_root_ca.pem":/etc/ssl/certs/zscaler_root_ca.pem
+k3d cluster create --config ./k3d.yaml
 
 # deploy nginx
 kubectl apply -f ./k8s-deployment-1.yaml
