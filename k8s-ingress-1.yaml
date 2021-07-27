@@ -16,4 +16,4 @@ spec:
             name: app-1
             port:
               # expose from kubernetes
-              number: 80
+              number: 8080
