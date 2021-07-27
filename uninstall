@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+k3d cluster delete learn-networking
+k3d registry delete k3d-learn-networking-registry

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-2
+  labels:
+    run: app-2
+spec:
+  ports:
+  - protocol: TCP
+    # expose internally
+    port: 8091
+    # map to app
+    targetPort: 80
+  selector:
+    run: app-2
